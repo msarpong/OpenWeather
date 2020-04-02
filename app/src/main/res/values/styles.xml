@@ -9,4 +9,33 @@
         <item name="windowActionBarOverlay">true</item>
         <item name="colorPrimary">@android:color/transparent</item>
     </style>
+
+
+    <style name="Text">
+        <item name="android:textColor">@color/colorPrimaryText</item>
+
+    </style>
+
+    <style name="TextBig" parent="@style/Text">
+        <item name="android:textSize">@dimen/title_size_verybig</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#ffcc00</item>
+    </style>
+
+    <style name="TextSmall" parent="@style/Text">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="TextSmallThin" parent="@style/Text">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="TextSmaller" parent="@style/Text">
+        <item name="android:textSize">@dimen/text_size_smaller</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>
