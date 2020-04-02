@@ -1,3 +1,3 @@
 package org.msarpong.openweather.utils
 
-const val MAIN_SCREEN_TIME = 2000L
+const val MAIN_SCREEN_TIME = 6000L
