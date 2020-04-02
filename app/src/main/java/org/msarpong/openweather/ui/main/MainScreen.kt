@@ -1,11 +1,11 @@
 package org.msarpong.openweather.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import org.msarpong.openweather.R
@@ -24,6 +24,9 @@ class MainScreen : AppCompatActivity() {
     private lateinit var tempWeather: TextView
     private lateinit var descriptionWeather: TextView
     private lateinit var tempMinMaxWeather: TextView
+    private lateinit var humidityWeather: TextView
+    private lateinit var sunsetSunriseWeather: TextView
+    private lateinit var windWeather: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,9 +40,12 @@ class MainScreen : AppCompatActivity() {
         progressBar = findViewById(R.id.progressBar)
         dateWeather = findViewById(R.id.date_textview)
         tempWeather = findViewById(R.id.temp_textview)
-        descriptionWeather = findViewById(R.id.descrption_textview)
+        descriptionWeather = findViewById(R.id.description_textview)
         tempMinMaxWeather = findViewById(R.id.temp_min_max_textview)
         cityWeather = findViewById(R.id.city_textview)
+        humidityWeather = findViewById(R.id.humidity_textview)
+        sunsetSunriseWeather = findViewById(R.id.sunset_sunrise_textview)
+        windWeather = findViewById(R.id.wind_textview)
     }
 
     override fun onStart() {
@@ -64,10 +70,14 @@ class MainScreen : AppCompatActivity() {
     private fun showWeather(response: WeatherResponse) {
         Log.d("GiphyActivity", "showGifs: $response")
         cityWeather.text = response.name
-        tempWeather.text = response.main.temp.roundToInt().toString()+"°"
+        tempWeather.text = response.main.temp.roundToInt().toString() + "°"
         dateWeather.text = "Wednesday - 01 April"
         descriptionWeather.text = response.weather[0].description.capitalize()
-        tempMinMaxWeather.text =response.main.tempMin.roundToInt().toString()+"° - "+response.main.tempMax.roundToInt().toString()+"°"
+        tempMinMaxWeather.text = response.main.tempMin.roundToInt()
+            .toString() + "° - " + response.main.tempMax.roundToInt().toString() + "°"
+        windWeather.text = response.wind.speed.toString()
+        humidityWeather.text = response.main.humidity.toString()
+        sunsetSunriseWeather.text = response.sys.sunrise.toString()
     }
 
     private fun showError(error: Throwable) {

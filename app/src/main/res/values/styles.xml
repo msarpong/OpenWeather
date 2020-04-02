@@ -1,9 +1,11 @@
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="AppTheme.ActionBar.Transparent" parent="AppTheme">
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowActionBarOverlay">true</item>
@@ -12,23 +14,37 @@
 
 
     <style name="Text">
+        <item name="android:layout_margin">8dp</item>
         <item name="android:textColor">@color/colorPrimaryText</item>
+    </style>
 
+    <style name="TitleBig" parent="@style/Text">
+        <item name="android:textSize">@dimen/title_size_big</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="TextBig" parent="@style/Text">
-        <item name="android:textSize">@dimen/title_size_verybig</item>
+        <item name="android:textSize">@dimen/title_size_bigger</item>
         <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#ffcc00</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="TextSmall" parent="@style/Text">
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:letterSpacing">0</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
     </style>
 
     <style name="TextSmallThin" parent="@style/Text">
+        <item name="android:textAlignment">center</item>
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:letterSpacing">0</item>
     </style>
@@ -36,6 +52,6 @@
     <style name="TextSmaller" parent="@style/Text">
         <item name="android:textSize">@dimen/text_size_smaller</item>
         <item name="android:letterSpacing">0</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 </resources>
