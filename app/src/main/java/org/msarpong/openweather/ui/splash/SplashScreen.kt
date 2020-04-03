@@ -28,7 +28,7 @@ class SplashScreen : AppCompatActivity() {
 
     private fun setupViews() {
         versionCode = findViewById(R.id.version_textview)
-        versionCode.text = ": " + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")"
+        versionCode.text = BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")"
     }
 
     private fun goToMain() {
