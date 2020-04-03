@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 import org.msarpong.openweather.R
 import org.msarpong.openweather.datamapping.WeatherResponse
 import org.msarpong.openweather.ui.setting.SettingScreen
-import org.msarpong.openweather.utils.FULLDATETIME
-import org.msarpong.openweather.utils.getDate
-import org.threeten.bp.Instant
+import org.msarpong.openweather.utils.*
 import kotlin.math.roundToInt
 
 
@@ -35,6 +34,8 @@ class MainScreen : AppCompatActivity() {
     private lateinit var humidityWeather: TextView
     private lateinit var sunsetSunriseWeather: TextView
     private lateinit var windWeather: TextView
+    private lateinit var iconWeather: ImageView
+    private lateinit var hourSunsetSunrise: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,12 +46,14 @@ class MainScreen : AppCompatActivity() {
 
     private fun setupViews() {
         progressBar = findViewById(R.id.progressBar)
-
+        hourSunsetSunrise = null.toString()
         menuButton = findViewById(R.id.menu_btn)
         menuButton.setOnClickListener {
             val intent = Intent(this, SettingScreen::class.java)
             startActivity(intent)
         }
+
+        iconWeather = findViewById(R.id.weather_icon_imageview)
 
         dateWeather = findViewById(R.id.date_textview)
         tempWeather = findViewById(R.id.temp_textview)
@@ -82,19 +85,44 @@ class MainScreen : AppCompatActivity() {
     }
 
     private fun showWeather(response: WeatherResponse) {
-        Log.d("MainScreen", "showWeather: $response")
-//        val icon = response.weather[0].icon.toInt()
-//        when (icon) {
-//            in 200..232 -> TODO() //THUNDERSTORM
-//            in 300..321 -> TODO() //Drizzle
-//            in 500..531 -> TODO() //RAIN
-//            in 600..622 -> TODO() //SNOW
-//            in 700..781 -> TODO() //CLOUD/ATMO
-//            800 -> TODO() //CLEAR
-//            in 801..804 -> TODO() //CLOUD
-//        }
 
-        val fromUnixTimestamp: Instant = Instant.ofEpochSecond(response.sys.sunrise.toLong())
+        Log.d("MainScreen", "hour: " + getHour())
+
+        val isDay = comparisonHour()
+        if (isDay) {
+            Log.d("MainScreen", "TIME: DAY")
+            sunsetSunriseWeather.text = convertTimestamp(response.sys.sunset.toLong())
+
+            val icon = response.weather[0].icon.toInt()
+            when (icon) {
+                in 200..232 -> iconWeather.setImageDrawable(getDrawable(R.drawable.ic_thunderstorm_day))
+                in 300..321 -> iconWeather.setImageDrawable(getDrawable(R.drawable.ic_drizzle))
+                in 500..531 -> iconWeather.setImageDrawable(getDrawable(R.drawable.ic_rain_day))
+                in 600..622 -> iconWeather.setImageDrawable(getDrawable(R.drawable.ic_snow_day)) //SNOW
+                in 700..781 -> iconWeather.setImageDrawable(getDrawable(R.drawable.ic_cloud)) //CLOUD/ATMO
+                800 -> iconWeather.setImageDrawable(getDrawable(R.drawable.ic_clear_day))//CLEAR
+                in 801..804 -> iconWeather.setImageDrawable(getDrawable(R.drawable.ic_cloudy_day)) //CLOUD
+            }
+        } else {
+            Log.d("MainScreen", "TIME: NIGHT")
+            sunsetSunriseWeather.text = convertTimestamp(response.sys.sunrise.toLong())
+
+            val icon = response.weather[0].id
+            when (icon) {
+                in 200..232 -> iconWeather.setImageDrawable(getDrawable(R.drawable.ic_thunderstorm_night))
+                in 300..321 -> iconWeather.setImageDrawable(getDrawable(R.drawable.ic_drizzle))
+                in 500..531 -> iconWeather.setImageDrawable(getDrawable(R.drawable.ic_rain_night))
+                in 600..622 -> iconWeather.setImageDrawable(getDrawable(R.drawable.ic_snow_night)) //SNOW
+                in 700..781 -> iconWeather.setImageDrawable(getDrawable(R.drawable.ic_cloud)) //CLOUD/ATMO
+                800 -> iconWeather.setImageDrawable(getDrawable(R.drawable.ic_clear_night))//CLEAR
+                in 801..804 -> iconWeather.setImageDrawable(getDrawable(R.drawable.ic_cloudy_night)) //CLOUD
+            }
+
+        }
+
+
+
+
         cityWeather.text = response.name
         tempWeather.text = response.main.temp.roundToInt().toString() + "°"
         dateWeather.text = capitalize(getDate(FULLDATETIME))
@@ -103,7 +131,7 @@ class MainScreen : AppCompatActivity() {
             .toString() + "° - " + response.main.tempMax.roundToInt().toString() + "°"
         windWeather.text = response.wind.speed.toString()
         humidityWeather.text = response.main.humidity.toString()
-        sunsetSunriseWeather.text = fromUnixTimestamp.toString()
+        sunsetSunriseWeather.text = hourSunsetSunrise
     }
 
     fun capitalize(str: String): String? {
