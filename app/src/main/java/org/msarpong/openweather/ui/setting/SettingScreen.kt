@@ -26,6 +26,7 @@ class SettingScreen : AppCompatActivity() {
         backutton.setOnClickListener {
             val intent = Intent(this, MainScreen::class.java)
             startActivity(intent)
+            finish()
         }
     }
 }

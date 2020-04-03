@@ -9,8 +9,12 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
+import com.google.android.material.snackbar.Snackbar
 import org.msarpong.openweather.R
 import org.msarpong.openweather.datamapping.WeatherResponse
 import org.msarpong.openweather.ui.setting.SettingScreen
@@ -26,6 +30,10 @@ class MainScreen : AppCompatActivity() {
 
     private lateinit var menuButton: ImageButton
 
+    private lateinit var swipeRefresh: SwipeRefreshLayout
+
+    private lateinit var baseLayout: CoordinatorLayout
+
     private lateinit var cityWeather: TextView
     private lateinit var dateWeather: TextView
     private lateinit var tempWeather: TextView
@@ -35,7 +43,7 @@ class MainScreen : AppCompatActivity() {
     private lateinit var sunsetSunriseWeather: TextView
     private lateinit var windWeather: TextView
     private lateinit var iconWeather: ImageView
-    private lateinit var hourSunsetSunrise: String
+    private var hourSunsetSunrise: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,12 +54,18 @@ class MainScreen : AppCompatActivity() {
 
     private fun setupViews() {
         progressBar = findViewById(R.id.progressBar)
-        hourSunsetSunrise = null.toString()
         menuButton = findViewById(R.id.menu_btn)
+        baseLayout = findViewById(R.id.base_layout)
         menuButton.setOnClickListener {
             val intent = Intent(this, SettingScreen::class.java)
             startActivity(intent)
         }
+        swipeRefresh = findViewById(R.id.refresh_mainscreen)
+
+        swipeRefresh.setOnRefreshListener(OnRefreshListener {
+            viewModel.send(MainEvent.Load)
+            Log.d("REFRESH", viewModel.send(MainEvent.Load).toString())
+        })
 
         iconWeather = findViewById(R.id.weather_icon_imageview)
 
@@ -77,6 +91,7 @@ class MainScreen : AppCompatActivity() {
                 is MainState.Success -> {
                     hideProgress()
                     showWeather(state.weatherList)
+                    swipeRefresh.isRefreshing = false
                 }
             }
         })
@@ -134,34 +149,16 @@ class MainScreen : AppCompatActivity() {
         sunsetSunriseWeather.text = hourSunsetSunrise
     }
 
-    fun capitalize(str: String): String? {
 
-        /* The first thing we do is remove whitespace from string */
-        val c = str.replace("\\s+".toRegex(), " ")
-        val s = c.trim { it <= ' ' }
-        var l = ""
-        var i = 0
-        while (i < s.length) {
-            if (i == 0) {                              /* Uppercase the first letter in strings */
-                l += s.toUpperCase()[i]
-                i++ /* To i = i + 1 because we don't need to add
-                                                    value i = 0 into string l */
-            }
-            l += s[i]
-            if (s[i]
-                    .toInt() == 32
-            ) {                   /* If we meet whitespace (32 in ASCII Code is whitespace) */
-                l += s.toUpperCase()[i + 1] /* Uppercase the letter after whitespace */
-                i++ /* Yo i = i + 1 because we don't need to add
-                                                   value whitespace into string l */
-            }
-            i++
-        }
-        return l
-    }
 
     private fun showError(error: Throwable) {
+        Log.d("MainActivity", "showError")
 
+        Snackbar.make(baseLayout, "error: $error", Snackbar.LENGTH_INDEFINITE)
+            .setAction("Retry", View.OnClickListener {
+                viewModel.send(MainEvent.Load)
+            })
+            .show()
     }
 
     private fun showProgress() {

@@ -48,4 +48,5 @@ dependencies {
 //    threetenabp
     implementation 'com.jakewharton.threetenabp:threetenabp:1.2.2'
 
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 }
