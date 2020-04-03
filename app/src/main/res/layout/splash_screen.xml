@@ -16,7 +16,7 @@
         android:contentDescription=""
         android:foregroundGravity="center_vertical"
         android:padding="100dp"
-        android:src="@drawable/ic_season"
+        android:src="@drawable/ic_day_sun"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -13,6 +13,9 @@ import androidx.lifecycle.ViewModelProviders
 import org.msarpong.openweather.R
 import org.msarpong.openweather.datamapping.WeatherResponse
 import org.msarpong.openweather.ui.setting.SettingScreen
+import org.msarpong.openweather.utils.FULLDATETIME
+import org.msarpong.openweather.utils.getDate
+import org.threeten.bp.Instant
 import kotlin.math.roundToInt
 
 
@@ -80,15 +83,53 @@ class MainScreen : AppCompatActivity() {
 
     private fun showWeather(response: WeatherResponse) {
         Log.d("MainScreen", "showWeather: $response")
+//        val icon = response.weather[0].icon.toInt()
+//        when (icon) {
+//            in 200..232 -> TODO() //THUNDERSTORM
+//            in 300..321 -> TODO() //Drizzle
+//            in 500..531 -> TODO() //RAIN
+//            in 600..622 -> TODO() //SNOW
+//            in 700..781 -> TODO() //CLOUD/ATMO
+//            800 -> TODO() //CLEAR
+//            in 801..804 -> TODO() //CLOUD
+//        }
+
+        val fromUnixTimestamp: Instant = Instant.ofEpochSecond(response.sys.sunrise.toLong())
         cityWeather.text = response.name
         tempWeather.text = response.main.temp.roundToInt().toString() + "°"
-        dateWeather.text = "Wednesday - 01 April"
+        dateWeather.text = capitalize(getDate(FULLDATETIME))
         descriptionWeather.text = response.weather[0].description.capitalize()
         tempMinMaxWeather.text = response.main.tempMin.roundToInt()
             .toString() + "° - " + response.main.tempMax.roundToInt().toString() + "°"
         windWeather.text = response.wind.speed.toString()
         humidityWeather.text = response.main.humidity.toString()
-        sunsetSunriseWeather.text = response.sys.sunrise.toString()
+        sunsetSunriseWeather.text = fromUnixTimestamp.toString()
+    }
+
+    fun capitalize(str: String): String? {
+
+        /* The first thing we do is remove whitespace from string */
+        val c = str.replace("\\s+".toRegex(), " ")
+        val s = c.trim { it <= ' ' }
+        var l = ""
+        var i = 0
+        while (i < s.length) {
+            if (i == 0) {                              /* Uppercase the first letter in strings */
+                l += s.toUpperCase()[i]
+                i++ /* To i = i + 1 because we don't need to add
+                                                    value i = 0 into string l */
+            }
+            l += s[i]
+            if (s[i]
+                    .toInt() == 32
+            ) {                   /* If we meet whitespace (32 in ASCII Code is whitespace) */
+                l += s.toUpperCase()[i + 1] /* Uppercase the letter after whitespace */
+                i++ /* Yo i = i + 1 because we don't need to add
+                                                   value whitespace into string l */
+            }
+            i++
+        }
+        return l
     }
 
     private fun showError(error: Throwable) {
