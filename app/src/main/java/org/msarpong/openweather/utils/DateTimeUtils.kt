@@ -14,7 +14,7 @@ fun getDate(pattern: String): String {
 }
 
 fun comparisonHour(currentHour: String = getHour(), sunset: String = "18:00"): Boolean {
-    val isBefore: Boolean = LocalTime.parse(currentHour).isBefore(LocalTime.parse(currentHour))
+    val isBefore: Boolean = LocalTime.parse(currentHour).isBefore(LocalTime.parse(sunset))
     return isBefore
 }
 

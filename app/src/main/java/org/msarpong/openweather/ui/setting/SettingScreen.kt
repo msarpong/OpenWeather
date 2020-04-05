@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import org.msarpong.openweather.R
 import org.msarpong.openweather.ui.main.MainScreen
 
+
 class SettingScreen : AppCompatActivity() {
 
     private lateinit var viewModel: SettingViewModel
@@ -18,6 +19,7 @@ class SettingScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.setting_screen)
         viewModel = ViewModelProviders.of(this)[SettingViewModel::class.java]
+
         setupViews()
     }
 

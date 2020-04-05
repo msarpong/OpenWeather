@@ -108,7 +108,7 @@ class MainScreen : AppCompatActivity() {
             Log.d("MainScreen", "TIME: DAY")
             sunsetSunriseWeather.text = convertTimestamp(response.sys.sunset.toLong())
 
-            val icon = response.weather[0].icon.toInt()
+            val icon = response.weather[0].id
             when (icon) {
                 in 200..232 -> iconWeather.setImageDrawable(getDrawable(R.drawable.ic_thunderstorm_day))
                 in 300..321 -> iconWeather.setImageDrawable(getDrawable(R.drawable.ic_drizzle))
@@ -144,8 +144,8 @@ class MainScreen : AppCompatActivity() {
         descriptionWeather.text = response.weather[0].description.capitalize()
         tempMinMaxWeather.text = response.main.tempMin.roundToInt()
             .toString() + "° - " + response.main.tempMax.roundToInt().toString() + "°"
-        windWeather.text = response.wind.speed.toString()
-        humidityWeather.text = response.main.humidity.toString()
+        windWeather.text = response.wind.speed.toString()+"%"
+        humidityWeather.text = response.main.humidity.toString()+"m/s"
         sunsetSunriseWeather.text = hourSunsetSunrise
     }
 
