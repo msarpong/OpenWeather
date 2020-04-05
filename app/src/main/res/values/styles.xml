@@ -62,7 +62,6 @@
     <style name="TextSmaller" parent="@style/Text">
         <item name="android:textSize">@dimen/text_size_smaller</item>
         <item name="android:letterSpacing">0</item>
-        <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/colorSecondaryText</item>
     </style>
 </resources>

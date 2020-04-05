@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">OpenWeather</string>
+    <string name="windWeather">%.1f m/s</string>
+    <string name="humidityWeather">%1$d\%%</string>
+    <string name="tempMinMax">%1$d%3$s - %2$d%3$s</string>
+    <string name="tempWeather">%1$d %2$s</string>
 </resources>

@@ -139,16 +139,18 @@ class MainScreen : AppCompatActivity() {
 
 
         cityWeather.text = response.name
-        tempWeather.text = response.main.temp.roundToInt().toString() + "°"
+        tempWeather.text = getString(R.string.tempWeather, response.main.temp.roundToInt(), UNIT_CELSIUS)
         dateWeather.text = capitalize(getDate(FULLDATETIME))
         descriptionWeather.text = response.weather[0].description.capitalize()
-        tempMinMaxWeather.text = response.main.tempMin.roundToInt()
-            .toString() + "° - " + response.main.tempMax.roundToInt().toString() + "°"
-        windWeather.text = response.wind.speed.toString()+"%"
-        humidityWeather.text = response.main.humidity.toString()+"m/s"
-        sunsetSunriseWeather.text = hourSunsetSunrise
+        tempMinMaxWeather.text = getString(
+            R.string.tempMinMax,
+            response.main.tempMin.roundToInt(),
+            response.main.tempMax.roundToInt(),
+            UNIT_CELSIUS
+        )
+        windWeather.text = getString(R.string.windWeather, response.wind.speed)
+        humidityWeather.text = getString(R.string.humidityWeather, response.main.humidity)
     }
-
 
 
     private fun showError(error: Throwable) {
