@@ -225,10 +225,11 @@
                 app:layout_constraintBottom_toBottomOf="parent">
 
                 <TextView
+                    android:id="@+id/last_update"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Last update: 01:50"
+                    tools:text="@string/last_update"
                     android:textAlignment="center" />
             </LinearLayout>
 

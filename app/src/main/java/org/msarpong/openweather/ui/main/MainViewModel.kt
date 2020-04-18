@@ -8,7 +8,6 @@ import org.msarpong.openweather.service.WeatherReceiver
 import org.msarpong.openweather.service.WeatherResult
 import org.msarpong.openweather.service.WeatherService
 
-
 sealed class MainEvent {
     object Load : MainEvent()
 }
@@ -39,8 +38,10 @@ class MainViewModel : ViewModel() {
             weatherService.getWeather(object : WeatherReceiver {
                 override fun receive(result: WeatherResult) {
                     when (result) {
-                        is WeatherResult.Success -> state.value = MainState.Success(weatherList = result.weatherList)
-                        is WeatherResult.Error ->state.value = MainState.Error(error = result.error)
+                        is WeatherResult.Success -> state.value =
+                            MainState.Success(weatherList = result.weatherList)
+                        is WeatherResult.Error -> state.value =
+                            MainState.Error(error = result.error)
                     }
                 }
 

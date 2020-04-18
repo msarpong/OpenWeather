@@ -1,6 +1,8 @@
 package org.msarpong.openweather.ui.main
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,14 +15,12 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.google.android.material.snackbar.Snackbar
 import org.msarpong.openweather.R
 import org.msarpong.openweather.datamapping.WeatherResponse
 import org.msarpong.openweather.ui.setting.SettingScreen
 import org.msarpong.openweather.utils.*
 import kotlin.math.roundToInt
-
 
 class MainScreen : AppCompatActivity() {
 
@@ -34,6 +34,8 @@ class MainScreen : AppCompatActivity() {
 
     private lateinit var baseLayout: CoordinatorLayout
 
+    private lateinit var sharedPrefs: SharedPreferences
+
     private lateinit var cityWeather: TextView
     private lateinit var dateWeather: TextView
     private lateinit var tempWeather: TextView
@@ -41,14 +43,15 @@ class MainScreen : AppCompatActivity() {
     private lateinit var tempMinMaxWeather: TextView
     private lateinit var humidityWeather: TextView
     private lateinit var sunsetSunriseWeather: TextView
+    private lateinit var lastUpdate: TextView
     private lateinit var windWeather: TextView
     private lateinit var iconWeather: ImageView
-    private var hourSunsetSunrise: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_screen)
         viewModel = ViewModelProviders.of(this)[MainViewModel::class.java]
+        sharedPrefs = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
         setupViews()
     }
 
@@ -62,10 +65,9 @@ class MainScreen : AppCompatActivity() {
         }
         swipeRefresh = findViewById(R.id.refresh_mainscreen)
 
-        swipeRefresh.setOnRefreshListener(OnRefreshListener {
+        swipeRefresh.setOnRefreshListener {
             viewModel.send(MainEvent.Load)
-            Log.d("REFRESH", viewModel.send(MainEvent.Load).toString())
-        })
+        }
 
         iconWeather = findViewById(R.id.weather_icon_imageview)
 
@@ -77,6 +79,7 @@ class MainScreen : AppCompatActivity() {
         humidityWeather = findViewById(R.id.humidity_textview)
         sunsetSunriseWeather = findViewById(R.id.sunset_sunrise_textview)
         windWeather = findViewById(R.id.wind_textview)
+        lastUpdate = findViewById(R.id.last_update)
     }
 
     override fun onStart() {
@@ -92,11 +95,15 @@ class MainScreen : AppCompatActivity() {
                     hideProgress()
                     showWeather(state.weatherList)
                     swipeRefresh.isRefreshing = false
+                    sharedPrefs.edit().putString(LAST_UPDATE, getHour()).apply()
                 }
+
             }
         })
 
         viewModel.send(MainEvent.Load)
+        sharedPrefs.edit().putString(LAST_UPDATE, getHour()).apply()
+
     }
 
     private fun showWeather(response: WeatherResponse) {
@@ -135,11 +142,9 @@ class MainScreen : AppCompatActivity() {
 
         }
 
-
-
-
         cityWeather.text = response.name
-        tempWeather.text = getString(R.string.tempWeather, response.main.temp.roundToInt(), UNIT_CELSIUS)
+        tempWeather.text =
+            getString(R.string.tempWeather, response.main.temp.roundToInt(), UNIT_CELSIUS)
         dateWeather.text = capitalize(getDate(FULLDATETIME))
         descriptionWeather.text = response.weather[0].description.capitalize()
         tempMinMaxWeather.text = getString(
@@ -150,6 +155,7 @@ class MainScreen : AppCompatActivity() {
         )
         windWeather.text = getString(R.string.windWeather, response.wind.speed)
         humidityWeather.text = getString(R.string.humidityWeather, response.main.humidity)
+        lastUpdate.text = getString(R.string.last_update, sharedPrefs.getString(LAST_UPDATE, getHour()))
     }
 
 
