@@ -6,8 +6,10 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.Switch
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import org.msarpong.openweather.BuildConfig
 import org.msarpong.openweather.R
 import org.msarpong.openweather.ui.main.MainScreen
 import org.msarpong.openweather.utils.SHARED_PREFS
@@ -21,6 +23,8 @@ class SettingScreen : AppCompatActivity() {
     private lateinit var unitSwitch: Switch
 
     private lateinit var sharedPrefs: SharedPreferences
+
+    private lateinit var versionText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,5 +53,9 @@ class SettingScreen : AppCompatActivity() {
                 viewModel.send(SettingEvent.Unit(false))
             }
         }
+
+        versionText = findViewById(R.id.version_textview)
+        versionText.text =
+            getString(R.string.version, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
     }
 }
