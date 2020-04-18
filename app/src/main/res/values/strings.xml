@@ -4,4 +4,11 @@
     <string name="humidityWeather">%1$d\%%</string>
     <string name="tempMinMax">%1$d%3$s - %2$d%3$s</string>
     <string name="tempWeather">%1$d %2$s</string>
+    <string name="last_update">Last update: %1$s</string>
+    <string name="back_menu">Back button</string>
+    <string name="unit">Unit</string>
+    <string name="celsius">°C</string>
+    <string name="fahrenheit">°F</string>
+    <string name="reminders">Reminders</string>
+    <string name="dark_theme">Dark Theme</string>
 </resources>
