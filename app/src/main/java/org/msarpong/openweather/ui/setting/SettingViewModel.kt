@@ -28,7 +28,9 @@ class SettingViewModel() : ViewModel() {
     }
 
     private fun saveUnit(event: Boolean) {
+        if (event) {
 
+        }
     }
 
     private fun saveAnimations(event: Boolean) {
