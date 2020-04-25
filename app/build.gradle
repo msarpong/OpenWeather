@@ -42,5 +42,7 @@ dependencies {
     implementation Libs.okttp3Interceptor
     implementation Libs.dateThreetenAdp
     implementation Libs.swipeRefresh
+    implementation Libs.koin
+    implementation Libs.koinViewModel
 
 }

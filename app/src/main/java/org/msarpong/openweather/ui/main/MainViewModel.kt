@@ -1,5 +1,6 @@
 package org.msarpong.openweather.ui.main
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,7 +19,7 @@ sealed class MainState {
     data class Error(val error: Throwable) : MainState()
 }
 
-class MainViewModel : ViewModel() {
+class MainViewModel(context: Context) : ViewModel() {
     var state: MutableLiveData<MainState> = MutableLiveData()
 
     private val weatherService = WeatherService()

@@ -1,13 +1,7 @@
 object Versions {
-    //app
 
-    // platform
-    const val buildTools = "29.0.2"
     const val kotlin = "1.3.70"
-    const val minSdk = 21
-    const val targetSdk = 29
-
-    // 3rd party
+    const val koin = "2.1.3"
     const val lifecycle_version = "2.2.0-rc03"
 }
 
@@ -40,6 +34,9 @@ object Libs {
     //    swipe
     const val swipeRefresh = "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
+    //    koin
+    const val koin = "org.koin:koin-android:${Versions.koin}"
+    const val koinViewModel = "org.koin:koin-android-viewmodel:${Versions.koin}"
 
 }
 

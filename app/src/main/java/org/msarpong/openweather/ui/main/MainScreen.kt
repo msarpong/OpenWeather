@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
+import org.koin.android.ext.android.inject
 import org.msarpong.openweather.R
 import org.msarpong.openweather.datamapping.WeatherResponse
 import org.msarpong.openweather.ui.setting.SettingScreen
@@ -24,7 +25,7 @@ import kotlin.math.roundToInt
 
 class MainScreen : AppCompatActivity() {
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by inject()
 
     private lateinit var progressBar: ProgressBar
 
@@ -50,7 +51,6 @@ class MainScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_screen)
-        viewModel = ViewModelProviders.of(this)[MainViewModel::class.java]
         sharedPrefs = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
         setupViews()
     }
@@ -155,7 +155,8 @@ class MainScreen : AppCompatActivity() {
         )
         windWeather.text = getString(R.string.windWeather, response.wind.speed)
         humidityWeather.text = getString(R.string.humidityWeather, response.main.humidity)
-        lastUpdate.text = getString(R.string.last_update, sharedPrefs.getString(LAST_UPDATE, getHour()))
+        lastUpdate.text =
+            getString(R.string.last_update, sharedPrefs.getString(LAST_UPDATE, getHour()))
     }
 
 
