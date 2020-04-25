@@ -1,0 +1,1 @@
+C:\Users\msarpong\AndroidStudioProjects\OpenWeather\buildSrc\build\classes\kotlin\main\Libs.class;C:\Users\msarpong\AndroidStudioProjects\OpenWeather\buildSrc\build\classes\kotlin\main\TestLibs.class;C:\Users\msarpong\AndroidStudioProjects\OpenWeather\buildSrc\build\classes\kotlin\main\Versions.class
