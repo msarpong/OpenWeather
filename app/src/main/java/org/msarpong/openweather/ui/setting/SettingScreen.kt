@@ -48,9 +48,6 @@ class SettingScreen : AppCompatActivity() {
 
         unitSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-
-                sharedPrefs.edit().putBoolean()
-
                 viewModel.send(SettingEvent.Unit(true))
             } else {
                 viewModel.send(SettingEvent.Unit(false))
