@@ -1,6 +1,7 @@
 package org.msarpong.openweather.ui.setting
 
 import androidx.lifecycle.ViewModel
+import org.msarpong.openweather.utils.KeyValueStorage
 
 sealed class SettingEvent {
     data class Notifications(val state: Boolean) : SettingEvent()
@@ -17,7 +18,7 @@ sealed class SettingState {
 }
 
 
-class SettingViewModel() : ViewModel() {
+class SettingViewModel(private val prefs: KeyValueStorage) : ViewModel() {
 
     fun send(event: SettingEvent) {
         when (event) {

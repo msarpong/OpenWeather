@@ -9,6 +9,7 @@ import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import org.koin.android.ext.android.inject
 import org.msarpong.openweather.BuildConfig
 import org.msarpong.openweather.R
 import org.msarpong.openweather.ui.main.MainScreen
@@ -16,7 +17,7 @@ import org.msarpong.openweather.utils.SHARED_PREFS
 
 class SettingScreen : AppCompatActivity() {
 
-    private lateinit var viewModel: SettingViewModel
+    private val viewModel: SettingViewModel by inject()
 
     private lateinit var backutton: ImageButton
 
@@ -29,8 +30,6 @@ class SettingScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.setting_screen)
-        viewModel = ViewModelProviders.of(this)[SettingViewModel::class.java]
-
         sharedPrefs = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
         setupViews()
     }
