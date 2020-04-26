@@ -4,9 +4,7 @@ import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
-import java.util.*
 
-val LOCALE = Locale.setDefault(Locale.ITALIAN)
 
 fun getDate(pattern: String): String {
     val currentDate = LocalDate.now()

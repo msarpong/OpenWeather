@@ -20,17 +20,12 @@ class SettingScreen : AppCompatActivity() {
     private val viewModel: SettingViewModel by inject()
 
     private lateinit var backutton: ImageButton
-
     private lateinit var unitSwitch: Switch
-
-    private lateinit var sharedPrefs: SharedPreferences
-
     private lateinit var versionText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.setting_screen)
-        sharedPrefs = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
         setupViews()
     }
 
