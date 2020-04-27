@@ -8,6 +8,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import org.msarpong.openweather.di.androidComponents
+import org.msarpong.openweather.di.appComponents
 import org.msarpong.openweather.di.retrofitModule
 import org.msarpong.openweather.di.viewModels
 
@@ -37,6 +38,7 @@ class Application : Application() {
                 listOf(
                     appSetupModule,
                     androidComponents,
+                    appComponents,
                     viewModels,
                     retrofitModule
                 )

@@ -24,7 +24,6 @@ interface WeatherReceiver {
 class WeatherService {
     private val service: WeatherApi = retrofit.create(WeatherApi::class.java)
 
-
     fun getWeather(receiver: WeatherReceiver) {
         service.getCurrentWeather("Palermo", UNIT_METRIC, "it", API_KEY)
             .enqueue(object : Callback<WeatherResponse> {

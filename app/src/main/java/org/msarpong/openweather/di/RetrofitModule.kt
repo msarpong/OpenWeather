@@ -26,5 +26,3 @@ val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .client(client)
     .build()
-
-private val service: WeatherApi = retrofit.create(WeatherApi::class.java)
