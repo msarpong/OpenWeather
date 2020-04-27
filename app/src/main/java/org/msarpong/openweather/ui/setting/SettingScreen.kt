@@ -6,6 +6,7 @@ import android.widget.ImageButton
 import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import org.koin.android.ext.android.inject
 import org.msarpong.openweather.BuildConfig
 import org.msarpong.openweather.R
@@ -42,7 +43,7 @@ class SettingScreen : AppCompatActivity() {
 
         unitSwitch = findViewById(R.id.switchUnit)
 
-        unitSwitch.isChecked = prefs.getBoolean(UNIT_TEMP, CELSIUS)
+        unitSwitch.isChecked = prefs.getBoolean(SETTING_UNIT, CELSIUS)
 
         unitSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -54,7 +55,7 @@ class SettingScreen : AppCompatActivity() {
 
         notificationSwitch = findViewById(R.id.switchNotification)
 
-        notificationSwitch.isChecked = prefs.getBoolean(NOTIFICATION, ON)
+        notificationSwitch.isChecked = prefs.getBoolean(SETTING_NOTIFICATION, ON)
 
         notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -66,7 +67,7 @@ class SettingScreen : AppCompatActivity() {
 
         uiSwitch = findViewById(R.id.switchUI)
 
-        uiSwitch.isChecked = prefs.getBoolean(DARK_THEME, ON)
+        uiSwitch.isChecked = prefs.getBoolean(SETTING_THEME, ON)
 
         uiSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
