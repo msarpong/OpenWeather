@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import org.koin.android.ext.android.inject
 import org.msarpong.openweather.BuildConfig
 import org.msarpong.openweather.R
+import org.msarpong.openweather.service.WeatherService
 import org.msarpong.openweather.ui.main.MainScreen
 import org.msarpong.openweather.utils.*
 
@@ -17,6 +18,10 @@ class SettingScreen : AppCompatActivity() {
 
     private val viewModel: SettingViewModel by inject()
     private val prefs: KeyValueStorage by inject()
+
+//    private val retrofit: Retrofit by inject()
+
+    private val retrofit : WeatherService by inject()
 
 
     private lateinit var backutton: ImageButton

@@ -19,10 +19,8 @@ sealed class MainState {
     data class Error(val error: Throwable) : MainState()
 }
 
-class MainViewModel(context: Context) : ViewModel() {
+class MainViewModel(private val weatherService: WeatherService) : ViewModel() {
     var state: MutableLiveData<MainState> = MutableLiveData()
-
-    private val weatherService = WeatherService()
 
     init {
         state.value = MainState.InProgress
@@ -34,7 +32,7 @@ class MainViewModel(context: Context) : ViewModel() {
         }
     }
 
-    fun loadContent() {
+    private fun loadContent() {
         try {
             weatherService.getWeather(object : WeatherReceiver {
                 override fun receive(result: WeatherResult) {

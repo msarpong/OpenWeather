@@ -10,11 +10,9 @@ import org.msarpong.openweather.utils.KeyValueStorageFactory
 val androidComponents = module {
     single { androidContext().resources }
     single { KeyValueStorageFactory.build(context = androidContext(), name = "openweather_prefs") }
-
 }
 
 val viewModels = module {
     viewModel { MainViewModel(get()) }
     viewModel { SettingViewModel(get()) }
-
 }

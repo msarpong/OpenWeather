@@ -25,3 +25,8 @@ const val DARK_THEME = "dark_theme"
 
 const val SHARED_PREFS = "OpenWeather"
 const val LAST_UPDATE = "Last_update"
+
+const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
+const val API_KEY = "eb490b1f6e000eda7b37d3decbb81ff6"
+const val UNIT_METRIC = "metric"
+const val UNIT_IMPERIAL = "imperial"
